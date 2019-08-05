@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Book {
@@ -18,24 +19,40 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String tilte;
+	private String title;
 	private String isbn;
-	private String publiser;
+	@OneToOne
+	private Publisher publisher;
+	
 	
 	@ManyToMany
 	@JoinTable(name = "author_book",joinColumns=@JoinColumn(name="book_id"),
 	inverseJoinColumns = @JoinColumn(name="author_id"))
 	private Set<Author> authors = new HashSet<>();
 	
+	
+	
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(String tilte, String isbn, String publiser) {
+	public Book(String title, String isbn,Publisher publisher) {
 		super();
-		this.tilte = tilte;
+		this.title = title;
 		this.isbn = isbn;
-		this.publiser = publiser;
+		this.publisher=publisher;
+		
+	}
+	
+	
+
+	public Book(Long id, String title, String isbn, Publisher publisher, Set<Author> authors) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.isbn = isbn;
+		this.publisher = publisher;
+		this.authors = authors;
 	}
 
 	public Long getId() {
@@ -46,12 +63,12 @@ public class Book {
 		this.id = id;
 	}
 
-	public String getTilte() {
-		return tilte;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTilte(String tilte) {
-		this.tilte = tilte;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getIsbn() {
@@ -62,13 +79,29 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public String getPubliser() {
-		return publiser;
+	
+
+	public Set<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setPubliser(String publiser) {
-		this.publiser = publiser;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
+
+	public Publisher getPublishers() {
+		return publisher;
+	}
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+	
 	
 	
 	
